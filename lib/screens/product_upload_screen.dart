@@ -1,5 +1,3 @@
-// ignore_for_file: missing_return
-
 import 'dart:io';
 
 import 'package:auraum_b2b_admin/constants/constants.dart';
@@ -7,20 +5,23 @@ import 'package:auraum_b2b_admin/screens/my_products_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProductUploadScreen extends StatefulWidget {
-  const ProductUploadScreen({ Key key }) : super(key: key);
+  const ProductUploadScreen({Key key}) : super(key: key);
 
   @override
   _ProductUploadScreenState createState() => _ProductUploadScreenState();
 }
 
 class _ProductUploadScreenState extends State<ProductUploadScreen> {
-
   final _formKey = GlobalKey<FormState>();
+  String category;
+  String dropDownValue = 'Select Category';
 
   File shopImage;
+
   // Image Picker methods
   Future shopTakeImage() async {
     try {
@@ -47,13 +48,18 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
       print('Failed to pick shopImage $e');
     }
     // dropDown List data
-
-    String valueChoose;
-    List listItems = [
-      
-    ];
-
   }
+
+  List listItems;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   dropDownValue;
+  //   setState(() {
+  //      listItems = category as List;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -63,28 +69,37 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
       appBar: AppBar(
         title: const Text(
           'Product Upload Screen',
-          ),
+        ),
         foregroundColor: ColorNames.rsFgColor,
-        backgroundColor: Colors.transparent, 
-        elevation: 0.0, 
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
       ),
       drawer: Drawer(
         backgroundColor: ColorNames.rsBgColor,
         child: ListView(
-          children:   [
+          children: [
             const DrawerHeader(
-              child: Image(image: AssetImage("assets/logo.png"),fit: BoxFit.contain,),
+              child: Image(
+                image: AssetImage("assets/logo.png"),
+                fit: BoxFit.contain,
+              ),
             ),
             ListTile(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-             tileColor: ColorNames.rsFgColor,
-             title: const Text(
-               'My Products',
-               style: TextStyle(color: ColorNames.rsBgColor,fontSize: 20,fontWeight: FontWeight.bold),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              tileColor: ColorNames.rsFgColor,
+              title: const Text(
+                'My Products',
+                style: TextStyle(
+                    color: ColorNames.rsBgColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
               ),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (contex)=> const MyProducts()));
-                
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MyProducts()));
               },
             ),
             const Divider(
@@ -92,18 +107,21 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
               height: 2,
             ),
             ListTile(
-             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), 
-             tileColor: ColorNames.rsFgColor,
-             title: const Text(
-               'My Account',
-               style: TextStyle(color: ColorNames.rsBgColor,fontSize: 20,fontWeight: FontWeight.bold),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              tileColor: ColorNames.rsFgColor,
+              title: const Text(
+                'My Account',
+                style: TextStyle(
+                    color: ColorNames.rsBgColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const Divider(
               color: ColorNames.rsBgColor,
               height: 2,
             ),
-
           ],
         ),
       ),
@@ -115,182 +133,312 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Builder(
-                    builder: (context) {
-                      return InkWell(
-                        child: Container(
-                          height: 200,
-                          width: 200,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: ColorNames.rsFgColor,width: 1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child:shopImage != null ? ClipRRect(child: Image(image: FileImage(shopImage),fit: BoxFit.fill,),borderRadius: BorderRadius.circular(10),) : Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Icon(Icons.upload,color: ColorNames.rsFgColor,size: 60,),
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Text(
-                                    "Upload Product Image",
-                                    style: TextStyle(fontSize: 18,color: ColorNames.rsFgColor),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                  Builder(builder: (context) {
+                    return InkWell(
+                      child: Container(
+                        height: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          border:
+                              Border.all(color: ColorNames.rsFgColor, width: 1),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        onTap: (){
-                          Scaffold.of(context).showBottomSheet<void>((BuildContext context){
-                            return Container(
-                              height: 180,
-                              decoration: const BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      TextButton(
-                                        onPressed: (){
-                                          shopTakeImage();
-                                          Navigator.pop(context);
-                                        },
-                                        child: Row(
-                                          children: const [
-                                            Icon(
-                                              Icons.camera_alt,
-                                              size: 40,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                               'Take Photo',
-                                               style: TextStyle(fontSize: 20),
-                                               )
-                                          ],
-                                        ),
-                                      ),
-                                      // pick product button
-                                      TextButton(
-                                        onPressed: (){
-                                          shopPickImage();
-                                          Navigator.pop(context);
-                                        },
-                                        child: Row(
-                                          children: const [
-                                            Icon(
-                                              Icons.camera_alt,
-                                              size: 40,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                               'Pick Photo',
-                                               style: TextStyle(fontSize: 20),
-                                               )
-                                          ],
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: TextButton(
-                                          onPressed: (){Navigator.pop(context);}, 
-                                          child: const Text("Cancel"),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                        child: shopImage != null
+                            ? ClipRRect(
+                                child: Image(
+                                  image: FileImage(shopImage),
+                                  fit: BoxFit.fill,
                                 ),
-                              ),          
-                            );
-                          });
-                        },
-                      );
-                    }
+                                borderRadius: BorderRadius.circular(10),
+                              )
+                            : Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(
+                                      Icons.upload,
+                                      color: ColorNames.rsFgColor,
+                                      size: 60,
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topCenter,
+                                      child: Text(
+                                        "Upload Product Image",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: ColorNames.rsFgColor),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                      ),
+                      onTap: () {
+                        Scaffold.of(context)
+                            .showBottomSheet<void>((BuildContext context) {
+                          return Container(
+                            height: 180,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        shopTakeImage();
+                                        Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.camera_alt,
+                                            size: 40,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            'Take Photo',
+                                            style: TextStyle(fontSize: 20),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    // pick product button
+                                    TextButton(
+                                      onPressed: () {
+                                        shopPickImage();
+                                        Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.photo_library_outlined,
+                                            size: 40,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            'Pick Photo',
+                                            style: TextStyle(fontSize: 20),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("Cancel"),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        });
+                      },
+                    );
+                  }),
+                  const SizedBox(
+                    height: 10,
                   ),
-                  const SizedBox(height: 15,),
+                  //drop down
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: DropdownButton<String>(
+                      value: dropDownValue,
+                      icon: const Icon(
+                        Icons.arrow_downward,
+                        color: ColorNames.rsFgColor,
+                      ),
+                      dropdownColor: ColorNames.rsBgColor,
+                      iconSize: 20,
+                      elevation: 16,
+                      style: const TextStyle(
+                          color: ColorNames.rsFgColor,
+                          backgroundColor: ColorNames.rsBgColor),
+                      underline: Container(
+                        height: 2,
+                        width: double.infinity,
+                        color: ColorNames.rsFgColor,
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropDownValue = newValue;
+                        });
+                      },
+                      items: <String>[
+                        'Select Category',
+                        'rings',
+                        'bangles',
+                        'bracelets',
+                        'chains',
+                        'ornaments',
+                        'neckless',
+                        'earrings',
+                        'Dumas',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  // add category field
+                  const SizedBox(
+                    height: 5,
+                  ),
+
+                  //  add Category field
                   TextFormField(
-                    validator: (value){
-                      if(value.isEmpty){
-                        return "Please Enter some text";
-                      }else if (value.length <= 5){
-                        return "Please Enter valid Product Name";
-                      }
-                    },
-                    style: const TextStyle(color: ColorNames.rsFgColor),
-                    cursorColor: ColorNames.rsFgColor,
-                    decoration:  const InputDecoration(
-                       hintText: "Enter Product Name",
-                       hintStyle: TextStyle(color:ColorNames.rsFgColor),
-                      floatingLabelStyle: TextStyle(color: ColorNames.rsFgColor),
-                      enabled: true,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: ColorNames.rsFgColor,width: 2),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: ColorNames.rsFgColor,width: 2),
-                      ),
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: ColorNames.rsFgColor,width: 2),
-                      )
-                      
-                      )
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Please Add Category";
+                        } else if (value.length <= 2) {
+                          return "Please Add Valid Category";
+                        }
+                        return null;
+                      },
+                      onSaved: (val) {
+                        category = val;
+                      },
+                      style: const TextStyle(
+                          color: ColorNames.rsFgColor, fontSize: 18),
+                      cursorColor: ColorNames.rsFgColor,
+                      decoration: const InputDecoration(
+                          labelText: "Add Category",
+                          labelStyle: TextStyle(
+                              color: ColorNames.rsFgColor, fontSize: 16),
+                          floatingLabelStyle:
+                              TextStyle(color: ColorNames.rsFgColor),
+                          enabled: true,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ))),
+                  const SizedBox(
+                    height: 15,
                   ),
-                  const SizedBox(height: 15,),
+
+                  // Product field
                   TextFormField(
-                    validator: (value){
-                      if(value.isEmpty){
-                        return "Please Enter some text";
-                      }
-                    },
-                    keyboardType: TextInputType.number,
-                    style: const TextStyle(color: ColorNames.rsFgColor),
-                    cursorColor: ColorNames.rsFgColor,
-                    decoration:  const InputDecoration(
-                       hintText: "Enter Product Weight",
-                       hintStyle: TextStyle(color:ColorNames.rsFgColor),
-                      floatingLabelStyle: TextStyle(color: ColorNames.rsFgColor),
-                      enabled: true,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: ColorNames.rsFgColor,width: 2),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: ColorNames.rsFgColor,width: 2),
-                      ),
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: ColorNames.rsFgColor,width: 2),
-                      )
-                      
-                      )
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Please Enter some text";
+                        } else if (value.length <= 5) {
+                          return "Please Enter valid Product Name";
+                        }
+                        return null;
+                      },
+                      style: const TextStyle(color: ColorNames.rsFgColor),
+                      cursorColor: ColorNames.rsFgColor,
+                      decoration: const InputDecoration(
+                          labelText: "Product Name",
+                          labelStyle: TextStyle(
+                              color: ColorNames.rsFgColor, fontSize: 16),
+                          floatingLabelStyle:
+                              TextStyle(color: ColorNames.rsFgColor),
+                          enabled: true,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ))),
+                  const SizedBox(
+                    height: 10,
                   ),
-                  const SizedBox(height: 15,),
                   TextFormField(
-                    style: const TextStyle(color: ColorNames.rsFgColor),
-                    cursorColor: ColorNames.rsFgColor,
-                    decoration:  const InputDecoration(
-                       hintText: "Enter Product Descripton",
-                       hintStyle: TextStyle(color:ColorNames.rsFgColor),
-                      floatingLabelStyle: TextStyle(color: ColorNames.rsFgColor),
-                      enabled: true,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: ColorNames.rsFgColor,width: 2),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: ColorNames.rsFgColor,width: 2),
-                      ),
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: ColorNames.rsFgColor,width: 2),
-                      )
-                      
-                      )
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Please Enter some text";
+                        } else if (value.length <= 1) {
+                          return "Please Enter valid Product Name";
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(color: ColorNames.rsFgColor),
+                      cursorColor: ColorNames.rsFgColor,
+                      decoration: const InputDecoration(
+                        suffixText: 'grams',
+                          suffixStyle: TextStyle(color: ColorNames.rsFgColor),
+                          labelText: "Product Weight",
+                          labelStyle: TextStyle(
+                              color: ColorNames.rsFgColor, fontSize: 16),
+                          floatingLabelStyle:
+                          TextStyle(color: ColorNames.rsFgColor),
+                          enabled: true,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ))),
+
+                  //GstIn no field
+
+                  const SizedBox(
+                    height: 10,
                   ),
-                  const SizedBox(height: 50,),
+
+                  //description field
+                  TextFormField(
+                      style: const TextStyle(color: ColorNames.rsFgColor),
+                      cursorColor: ColorNames.rsFgColor,
+                      decoration: const InputDecoration(
+                          labelText: "Product Description",
+                          labelStyle: TextStyle(
+                              color: ColorNames.rsFgColor, fontSize: 16),
+                          floatingLabelStyle:
+                              TextStyle(color: ColorNames.rsFgColor),
+                          enabled: true,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: ColorNames.rsFgColor, width: 2),
+                          ))),
+                  const SizedBox(
+                    height: 50,
+                  ),
                   // Upload button
                   SizedBox(
                     height: 40,
@@ -298,30 +446,65 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.resolveWith(
-                        (states) => ColorNames.buttonBgColor),
+                            (states) => ColorNames.buttonBgColor),
                       ),
-                      onPressed: (){
-                        if(_formKey.currentState.validate()){
+                      onPressed: () {
+                        if(shopImage == null){
                           final snackBar = SnackBar(
-                                content: const Text('Product is Uploaded'),
-                                action: SnackBarAction(
-                                  label: 'Undo',
-                                  onPressed: () {},
-                                ),
-                                duration: const Duration(seconds: 1),
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                              // Navigator.push(context, MaterialPageRoute(builder: (context) =>  const ProductUploadScreen()));
+                            content: const Text('Please Upload Product Image'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {},
+                            ),
+                            duration: const Duration(seconds: 1),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
+                        else if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+
+                          final snackBar = SnackBar(
+                            content: const Text('Product is Uploaded'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {},
+                            ),
+                            duration: const Duration(seconds: 1),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          // Navigator.push(context, MaterialPageRoute(builder: (context) =>  const ProductUploadScreen()));
+                        }
+                        print(listItems);
+                        /*else if(_formKey.currentState.validate()){
+                          final snackBar = SnackBar(
+                            content: const Text('Category is Added'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {},
+                            ),
+                            duration: const Duration(seconds: 3),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }else if(shopImage == null){
+                          final snackBar = SnackBar(
+                            content: const Text('Please Upload Product Image'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {},
+                            ),
+                            duration: const Duration(seconds: 2),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }*/
                       },
                       child: const Text(
                         'Upload Product',
                         style: TextStyle(
-                                     color: ColorNames.rsBgColor,
-                                     fontSize: 20,
-                                     fontWeight: FontWeight.bold,
-                                   ),
+                          color: ColorNames.rsBgColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
                     ),
                   )
                 ],
