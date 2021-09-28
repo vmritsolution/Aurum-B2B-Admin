@@ -76,53 +76,56 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
       ),
       drawer: Drawer(
         backgroundColor: ColorNames.rsBgColor,
-        child: ListView(
-          children: [
-            const DrawerHeader(
-              child: Image(
-                image: AssetImage("assets/logo.png"),
-                fit: BoxFit.contain,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: [
+              const DrawerHeader(
+                child: Image(
+                  image: AssetImage("assets/logo.png"),
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-            ListTile(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              tileColor: ColorNames.rsFgColor,
-              title: const Text(
-                'My Products',
-                style: TextStyle(
-                    color: ColorNames.rsBgColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                tileColor: ColorNames.rsFgColor,
+                title: const Text(
+                  'My Products',
+                  style: TextStyle(
+                      color: ColorNames.rsBgColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyProducts()));
+                },
               ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MyProducts()));
-              },
-            ),
-            const Divider(
-              color: ColorNames.rsBgColor,
-              height: 2,
-            ),
-            ListTile(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              tileColor: ColorNames.rsFgColor,
-              title: const Text(
-                'My Account',
-                style: TextStyle(
-                    color: ColorNames.rsBgColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
+              const Divider(
+                color: ColorNames.rsBgColor,
+                height: 2,
               ),
-            ),
-            const Divider(
-              color: ColorNames.rsBgColor,
-              height: 2,
-            ),
-          ],
+              ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                tileColor: ColorNames.rsFgColor,
+                title: const Text(
+                  'My Account',
+                  style: TextStyle(
+                      color: ColorNames.rsBgColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              const Divider(
+                color: ColorNames.rsBgColor,
+                height: 2,
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
@@ -473,9 +476,9 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           // Navigator.push(context, MaterialPageRoute(builder: (context) =>  const ProductUploadScreen()));
+                          print(listItems);
                         }
-                        print(listItems);
-                        /*else if(_formKey.currentState.validate()){
+                        else if(_formKey.currentState.validate()){
                           final snackBar = SnackBar(
                             content: const Text('Category is Added'),
                             action: SnackBarAction(
@@ -495,7 +498,7 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                             duration: const Duration(seconds: 2),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }*/
+                        }
                       },
                       child: const Text(
                         'Upload Product',

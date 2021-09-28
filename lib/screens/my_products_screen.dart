@@ -50,13 +50,14 @@ class _MyProductsState extends State<MyProducts> {
                   child: Column(
                     children: [
                       Row(
-                        mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.only(top: 25,left: 10),
                             child: SizedBox(
-                              height: 120,
-                              width: 120,
+                              height: 130,
+                              width: 130,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: const Image(
@@ -65,32 +66,70 @@ class _MyProductsState extends State<MyProducts> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Text(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    InkWell(
+                                      child: const Icon(
+                                        Icons.edit,
+                                        color: ColorNames.rsFgColor,
+                                      ),
+                                      onTap: (){},
+                                    ),
+                                    const SizedBox(width: 15,),
+                                    InkWell(
+                                      child: const Icon(
+                                        Icons.delete_outline,
+                                        color: ColorNames.rsFgColor,
+                                      ),
+                                      onTap:  (){},
+                                      overlayColor: MaterialStateProperty.resolveWith((states) => Colors.red),
+                                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                    ),
+
+
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 25,),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 40),
+                                child: Text(
                                   'ProductName',
                                   style: TextStyle(
-                                      color: ColorNames.rsFgColor, fontSize: 18),
+                                      color: ColorNames.rsFgColor,
+                                      fontSize: 18),
                                 ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 40),
+                                child: Text(
                                   'Weight',
                                   style: TextStyle(
                                     color: ColorNames.rsFgColor,
                                     fontSize: 18,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
+                        ],
+                      ),
+                      /* Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+
+                          const SizedBox(
+                            width: 10,
+                          ),
+
                           Align(
                             alignment: Alignment.topRight,
                             child: Checkbox(
@@ -98,7 +137,7 @@ class _MyProductsState extends State<MyProducts> {
                               fillColor:
                                   MaterialStateProperty.resolveWith(getColor),
                               value: isChecked,
-                              onChanged: (bool value){
+                              onChanged: (bool value) {
                                 setState(() {
                                   isChecked = value;
                                 });
@@ -106,8 +145,8 @@ class _MyProductsState extends State<MyProducts> {
                             ),
                           )
                         ],
-                      ),
-                      Row(
+                      ),*/
+                      /* Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           RaisedButton(
@@ -135,7 +174,7 @@ class _MyProductsState extends State<MyProducts> {
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                         ],
-                      )
+                      )*/
                     ],
                   ),
                 ),
