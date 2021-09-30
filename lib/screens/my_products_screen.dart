@@ -13,6 +13,7 @@ class _MyProductsState extends State<MyProducts> {
 
   @override
   Widget build(BuildContext context) {
+    // check box properties
     Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
         MaterialState.pressed,
@@ -41,7 +42,7 @@ class _MyProductsState extends State<MyProducts> {
             child: Column(
               children: [
                 Container(
-                  height: 190,
+                  height: 160,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     border: Border.all(color: ColorNames.rsFgColor, width: 1),
@@ -51,13 +52,13 @@ class _MyProductsState extends State<MyProducts> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 25,left: 10),
+                            padding: const EdgeInsets.all(8),
                             child: SizedBox(
-                              height: 130,
-                              width: 130,
+                              height: 140,
+                              width: 140,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: const Image(
@@ -67,37 +68,9 @@ class _MyProductsState extends State<MyProducts> {
                             ),
                           ),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    InkWell(
-                                      child: const Icon(
-                                        Icons.edit,
-                                        color: ColorNames.rsFgColor,
-                                      ),
-                                      onTap: (){},
-                                    ),
-                                    const SizedBox(width: 15,),
-                                    InkWell(
-                                      child: const Icon(
-                                        Icons.delete_outline,
-                                        color: ColorNames.rsFgColor,
-                                      ),
-                                      onTap:  (){},
-                                      overlayColor: MaterialStateProperty.resolveWith((states) => Colors.red),
-                                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                    ),
-
-
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 25,),
                               const Padding(
-                                padding: EdgeInsets.only(right: 40),
+                                padding: EdgeInsets.only(right: 10,),
                                 child: Text(
                                   'ProductName',
                                   style: TextStyle(
@@ -105,11 +78,9 @@ class _MyProductsState extends State<MyProducts> {
                                       fontSize: 18),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              const SizedBox(height: 5,),
                               const Padding(
-                                padding: EdgeInsets.only(right: 40),
+                                padding: EdgeInsets.only(right: 55),
                                 child: Text(
                                   'Weight',
                                   style: TextStyle(
@@ -118,6 +89,53 @@ class _MyProductsState extends State<MyProducts> {
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 5,),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 45),
+                                child: Text(
+                                  'Category',
+                                  style: TextStyle(
+                                    color: ColorNames.rsFgColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              ButtonBar(
+                                children: [
+                                  ElevatedButton(
+                                    child: const Text(
+                                      'Edit',
+                                      style: TextStyle(
+                                          color: ColorNames.rsBgColor),
+                                    ),
+                                    onPressed: () {},
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.resolveWith(
+                                              (states) =>
+                                                  ColorNames.buttonBgColor),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 1,
+                                  ),
+                                  ElevatedButton(
+                                    child: const Text('Delete',
+                                        style: TextStyle(
+                                            color: ColorNames.rsBgColor)),
+                                    onPressed: () {},
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.resolveWith(
+                                              (states) =>
+                                                  ColorNames.buttonBgColor),
+                                    ),
+                                  )
+                                ],
+                              )
                             ],
                           ),
                         ],
@@ -175,6 +193,111 @@ class _MyProductsState extends State<MyProducts> {
                           ),
                         ],
                       )*/
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 160,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: ColorNames.rsFgColor, width: 1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: SizedBox(
+                              height: 140,
+                              width: 140,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: const Image(
+                                  image: AssetImage('assets/image1.png'),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(right: 10,),
+                                child: Text(
+                                  'ProductName',
+                                  style: TextStyle(
+                                      color: ColorNames.rsFgColor,
+                                      fontSize: 18),
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 55),
+                                child: Text(
+                                  'Weight',
+                                  style: TextStyle(
+                                    color: ColorNames.rsFgColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 45),
+                                child: Text(
+                                  'Category',
+                                  style: TextStyle(
+                                    color: ColorNames.rsFgColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              ButtonBar(
+                                children: [
+                                  ElevatedButton(
+                                    child: const Text(
+                                      'Edit',
+                                      style: TextStyle(
+                                          color: ColorNames.rsBgColor),
+                                    ),
+                                    onPressed: () {},
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                              (states) =>
+                                          ColorNames.buttonBgColor),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 1,
+                                  ),
+                                  ElevatedButton(
+                                    child: const Text('Delete',
+                                        style: TextStyle(
+                                            color: ColorNames.rsBgColor)),
+                                    onPressed: () {},
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                              (states) =>
+                                          ColorNames.buttonBgColor),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:auraum_b2b_admin/constants/constants.dart';
 import 'package:auraum_b2b_admin/screens/my_products_screen.dart';
+import 'package:auraum_b2b_admin/screens/new_order_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'order_deliver_screen.dart';
 
 class ProductUploadScreen extends StatefulWidget {
   const ProductUploadScreen({Key key}) : super(key: key);
@@ -26,7 +29,7 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
   Future shopTakeImage() async {
     try {
       XFile shopImage =
-          await ImagePicker().pickImage(source: ImageSource.camera);
+      await ImagePicker().pickImage(source: ImageSource.camera);
       if (shopImage == null) return;
       final imageTemporary = File(shopImage.path);
       setState(() => this.shopImage = imageTemporary);
@@ -39,7 +42,7 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
   Future shopPickImage() async {
     try {
       XFile shopImage =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
+      await ImagePicker().pickImage(source: ImageSource.gallery);
       if (shopImage == null) return;
       final imageTemporary = File(shopImage.path);
       setState(() => this.shopImage = imageTemporary);
@@ -124,6 +127,42 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                 color: ColorNames.rsBgColor,
                 height: 2,
               ),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                tileColor: ColorNames.rsFgColor,
+                title: const Text(
+                  'New Orders',
+                  style: TextStyle(
+                      color: ColorNames.rsBgColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => const NewOrderScreen()));
+                },
+              ),
+              const Divider(
+                color: ColorNames.rsBgColor,
+                height: 2,
+              ),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                tileColor: ColorNames.rsFgColor,
+                title: const Text(
+                  'Order Delivers',
+                  style: TextStyle(
+                      color: ColorNames.rsBgColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => const OrderDeliverScreen()));
+                },
+              ),
             ],
           ),
         ),
@@ -143,38 +182,38 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                         width: 200,
                         decoration: BoxDecoration(
                           border:
-                              Border.all(color: ColorNames.rsFgColor, width: 1),
+                          Border.all(color: ColorNames.rsFgColor, width: 1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: shopImage != null
                             ? ClipRRect(
-                                child: Image(
-                                  image: FileImage(shopImage),
-                                  fit: BoxFit.fill,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              )
+                          child: Image(
+                            image: FileImage(shopImage),
+                            fit: BoxFit.fill,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        )
                             : Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(
-                                      Icons.upload,
-                                      color: ColorNames.rsFgColor,
-                                      size: 60,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Text(
-                                        "Upload Product Image",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            color: ColorNames.rsFgColor),
-                                      ),
-                                    )
-                                  ],
-                                ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.upload,
+                                color: ColorNames.rsFgColor,
+                                size: 60,
                               ),
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Text(
+                                  "Upload Product Image",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: ColorNames.rsFgColor),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                       onTap: () {
                         Scaffold.of(context)
@@ -184,7 +223,7 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                             decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                              BorderRadius.all(Radius.circular(10)),
                             ),
                             child: Center(
                               child: Padding(
@@ -256,90 +295,114 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                     height: 10,
                   ),
                   //drop down
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: DropdownButton<String>(
-                      value: dropDownValue,
-                      icon: const Icon(
-                        Icons.arrow_downward,
-                        color: ColorNames.rsFgColor,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            height: 60,
+                            child: DropdownButton<String>(
+                              value: dropDownValue,
+                              icon: const Icon(
+                                Icons.arrow_downward,
+                                color: ColorNames.rsFgColor,
+                              ),
+                              dropdownColor: ColorNames.rsBgColor,
+                              iconSize: 20,
+                              elevation: 16,
+                              isExpanded: true,
+                              style: const TextStyle(
+                                  color: ColorNames.rsFgColor,
+                                  backgroundColor: ColorNames.rsBgColor,
+                                  fontSize: 16
+                              ),
+                              underline: Container(
+                                height: 2,
+                                width: double.infinity,
+                                color: ColorNames.rsFgColor,
+                              ),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  dropDownValue = newValue;
+                                });
+                              },
+                              items: <String>[
+                                'Select Category',
+                                'rings',
+                                'bangles',
+                                'bracelets',
+                                'chains',
+                                'ornaments',
+                                'neckless',
+                                'earrings',
+                                'Dumas',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
                       ),
-                      dropdownColor: ColorNames.rsBgColor,
-                      iconSize: 20,
-                      elevation: 16,
-                      style: const TextStyle(
-                          color: ColorNames.rsFgColor,
-                          backgroundColor: ColorNames.rsBgColor),
-                      underline: Container(
-                        height: 2,
-                        width: double.infinity,
-                        color: ColorNames.rsFgColor,
+                      const SizedBox(
+                        width: 40,
                       ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropDownValue = newValue;
-                        });
-                      },
-                      items: <String>[
-                        'Select Category',
-                        'rings',
-                        'bangles',
-                        'bracelets',
-                        'chains',
-                        'ornaments',
-                        'neckless',
-                        'earrings',
-                        'Dumas',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  // add category field
-                  const SizedBox(
-                    height: 5,
+                      Expanded(
+                        flex: 1,
+                        child: SizedBox(
+                          height: 80,
+                          child: TextFormField(
+                            /*validator: (value) {
+                            if (value.isEmpty) {
+                              return "Please Add Category";
+                            } else if (value.length <= 2) {
+                              return "Please Add Valid Category";
+                            }
+                            return null;
+                          },
+                          onSaved: (val) {
+                            category = val;
+                          },*/
+                              style: const TextStyle(
+                                  color: ColorNames.rsFgColor, fontSize: 18),
+                              cursorColor: ColorNames.rsFgColor,
+                              readOnly: false,
+                              decoration: const InputDecoration(
+                                  suffixIcon: Icon(
+                                    Icons.add,
+                                    color: ColorNames.rsFgColor,
+                                  ),
+                                  labelText: "Add Category",
+                                  labelStyle: TextStyle(
+                                      color: ColorNames.rsFgColor,
+                                      fontSize: 16),
+                                  floatingLabelStyle:
+                                  TextStyle(color: ColorNames.rsFgColor),
+                                  enabled: true,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: ColorNames.rsFgColor, width: 2),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: ColorNames.rsFgColor, width: 2),
+                                  ),
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: ColorNames.rsFgColor, width: 2),
+                                  ))),
+                        ),
+                      ),
+                    ],
                   ),
 
-                  //  add Category field
-                  TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "Please Add Category";
-                        } else if (value.length <= 2) {
-                          return "Please Add Valid Category";
-                        }
-                        return null;
-                      },
-                      onSaved: (val) {
-                        category = val;
-                      },
-                      style: const TextStyle(
-                          color: ColorNames.rsFgColor, fontSize: 18),
-                      cursorColor: ColorNames.rsFgColor,
-                      decoration: const InputDecoration(
-                          labelText: "Add Category",
-                          labelStyle: TextStyle(
-                              color: ColorNames.rsFgColor, fontSize: 16),
-                          floatingLabelStyle:
-                              TextStyle(color: ColorNames.rsFgColor),
-                          enabled: true,
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ColorNames.rsFgColor, width: 2),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ColorNames.rsFgColor, width: 2),
-                          ),
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ColorNames.rsFgColor, width: 2),
-                          ))),
                   const SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
 
                   // Product field
@@ -359,7 +422,7 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                           labelStyle: TextStyle(
                               color: ColorNames.rsFgColor, fontSize: 16),
                           floatingLabelStyle:
-                              TextStyle(color: ColorNames.rsFgColor),
+                          TextStyle(color: ColorNames.rsFgColor),
                           enabled: true,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -389,7 +452,7 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                       style: const TextStyle(color: ColorNames.rsFgColor),
                       cursorColor: ColorNames.rsFgColor,
                       decoration: const InputDecoration(
-                        suffixText: 'grams',
+                          suffixText: 'grams',
                           suffixStyle: TextStyle(color: ColorNames.rsFgColor),
                           labelText: "Product Weight",
                           labelStyle: TextStyle(
@@ -425,7 +488,7 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                           labelStyle: TextStyle(
                               color: ColorNames.rsFgColor, fontSize: 16),
                           floatingLabelStyle:
-                              TextStyle(color: ColorNames.rsFgColor),
+                          TextStyle(color: ColorNames.rsFgColor),
                           enabled: true,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -449,10 +512,10 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.resolveWith(
-                            (states) => ColorNames.buttonBgColor),
+                                (states) => ColorNames.buttonBgColor),
                       ),
                       onPressed: () {
-                        if(shopImage == null){
+                        if (shopImage == null) {
                           final snackBar = SnackBar(
                             content: const Text('Please Upload Product Image'),
                             action: SnackBarAction(
@@ -462,8 +525,7 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                             duration: const Duration(seconds: 1),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
-                        else if (_formKey.currentState.validate()) {
+                        } else if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
 
                           final snackBar = SnackBar(
@@ -477,8 +539,7 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           // Navigator.push(context, MaterialPageRoute(builder: (context) =>  const ProductUploadScreen()));
                           print(listItems);
-                        }
-                        else if(_formKey.currentState.validate()){
+                        } else if (_formKey.currentState.validate()) {
                           final snackBar = SnackBar(
                             content: const Text('Category is Added'),
                             action: SnackBarAction(
@@ -488,7 +549,7 @@ class _ProductUploadScreenState extends State<ProductUploadScreen> {
                             duration: const Duration(seconds: 3),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }else if(shopImage == null){
+                        } else if (shopImage == null) {
                           final snackBar = SnackBar(
                             content: const Text('Please Upload Product Image'),
                             action: SnackBarAction(
