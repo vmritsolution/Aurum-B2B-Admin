@@ -83,7 +83,7 @@ class _OrderDeliverScreenState extends State<OrderDeliverScreen> {
                                 height: 5,
                               ),
                               Text(
-                                'Category',
+                                'Weight',
                                 style: TextStyle(
                                   color: ColorNames.rsFgColor,
                                   fontSize: 18,
